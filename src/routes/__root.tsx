@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
-import { Layout } from '../components/layout'
+import { Layout } from '../components/Layout'
 import { AuthProvider } from '../libs/auth/AuthProvider'
 
 const RootLayout: FC = () => {

@@ -1,16 +1,45 @@
 import type { FC } from "react"
-import {
-  createFileRoute,
-  Link,
-  redirect,
-  useNavigate,
-} from "@tanstack/react-router"
+import { useMemo } from "react"
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router"
+import { getApiErrorMessage } from "../api"
+import { useAssetsQuery } from "../api/hooks/useAssetsQuery"
+import { usePortfolioQuery } from "../api/hooks/usePortfolioQuery"
+import { usePricesQuery } from "../api/hooks/usePricesQuery"
+import { DashboardView } from "../components/DashboardView"
 import { isAuthed, logout } from "../libs/auth/auth"
 import { useAuth } from "../libs/auth/useAuth"
 
 const DashboardPage: FC = () => {
   const navigate = useNavigate()
   const { setUser } = useAuth()
+  const {
+    data: assets,
+    isLoading: assetsLoading,
+    error: assetsError,
+  } = useAssetsQuery()
+  const {
+    data: portfolio,
+    isLoading: portfolioLoading,
+    error: portfolioError,
+  } = usePortfolioQuery()
+
+  const priceAssets = useMemo(() => {
+    if (!assets || !portfolio) {
+      return []
+    }
+
+    const assetById = new Map(assets.map((asset) => [asset.id, asset.name]))
+
+    return portfolio.positions
+      .map((position) => assetById.get(position.asset))
+      .filter((assetName): assetName is string => Boolean(assetName))
+  }, [assets, portfolio])
+
+  const {
+    data: prices,
+    error: pricesError,
+    isLoading: pricesLoading,
+  } = usePricesQuery({ assets: priceAssets })
 
   const handleLogout = () => {
     logout()
@@ -19,32 +48,20 @@ const DashboardPage: FC = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
-            Vega Portfolio
-          </p>
-          <h1 className="text-2xl font-semibold">Dashboard</h1>
-        </div>
-        <div className="flex items-center gap-3">
-          <Link
-            className="rounded-md border border-[rgb(var(--border))] px-4 py-2 text-sm font-semibold"
-            to="/"
-          >
-            Back home
-          </Link>
-          <button
-            className="rounded-md border border-[rgb(var(--border))] px-4 py-2 text-sm font-semibold"
-            onClick={handleLogout}
-            type="button"
-          >
-            Logout
-          </button>
-        </div>
-      </div>
-      <p className="text-sm text-slate-500">Widgets and Graphs.</p>
-    </div>
+    <DashboardView
+      badge="Vega Portfolio"
+      title="Dashboard"
+      onLogout={handleLogout}
+      assetsCount={assets?.length ?? 0}
+      positionsCount={portfolio?.positions.length ?? 0}
+      pricesCount={prices?.length ?? 0}
+      isLoading={assetsLoading || portfolioLoading}
+      hasError={Boolean(assetsError || portfolioError || pricesError)}
+      errorMessage={getApiErrorMessage(
+        assetsError ?? portfolioError ?? pricesError,
+      )}
+      isPricesLoading={pricesLoading}
+    />
   )
 }
 
