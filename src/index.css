@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/* Theme tokens (white-labelling) */
+:root {
+  --bg: 255 255 255;
+  --fg: 17 24 39; /* slate-900-ish */
+  --card: 255 255 255;
+  --border: 229 231 235;
+  --primary: 37 99 235; /* blue-600-ish */
+}
+
+[data-theme="alt"] {
+  --bg: 15 23 42; /* slate-900-ish */
+  --fg: 226 232 240; /* slate-200-ish */
+  --card: 30 41 59; /* slate-800-ish */
+  --border: 51 65 85; /* slate-700-ish */
+  --primary: 56 189 248; /* sky-400-ish */
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+}
