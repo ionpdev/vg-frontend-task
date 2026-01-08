@@ -4,7 +4,7 @@ Frontend dashboard task built with React, TypeScript, TanStack Router, and Tailw
 
 ## Architecture
 
-See `ARCHITECTURE.md` for an overview of the tech stack, structure, and data flow.
+See [ARCHITECTURE.md](ARCHITECTURE.md) for an overview of the tech stack, structure, and data flow.
 
 ## Install
 
