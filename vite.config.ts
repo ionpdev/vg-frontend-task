@@ -9,5 +9,12 @@ export default defineConfig({
   build: {
     outDir: "../dist",
   },
-  plugins: [tailwindcss(), react(), tanstackRouter()],
+  plugins: [
+    tailwindcss(),
+    react(),
+    tanstackRouter({
+      routesDirectory: "./routes",
+      generatedRouteTree: "./routeTree.gen.ts",
+    }),
+  ],
 })

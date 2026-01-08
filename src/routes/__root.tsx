@@ -1,12 +1,30 @@
 import type { FC } from 'react'
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
+import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
+import { TanStackDevtools } from '@tanstack/react-devtools'
 import { Layout } from '../components/layout'
+import { AuthProvider } from '../libs/auth/AuthProvider'
 
 const RootLayout: FC = () => {
+  const isDev = import.meta.env.DEV
+
   return (
-    <Layout>
-      <Outlet />
-    </Layout>
+    <AuthProvider>
+      <Layout>
+        <Outlet />
+        {isDev ? (
+          <TanStackDevtools
+            config={{ position: 'bottom-right' }}
+            plugins={[
+              {
+                name: 'TanStack Router',
+                render: <TanStackRouterDevtoolsPanel />,
+              },
+            ]}
+          />
+        ) : null}
+      </Layout>
+    </AuthProvider>
   )
 }
 
