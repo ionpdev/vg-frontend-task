@@ -3,6 +3,7 @@ import type { HistoryPoint, HistoryRange } from '../domain/models'
 import { Card } from './ui/Card'
 import { LineChart } from './ui/LineChart'
 import { SegmentedControl } from './ui/SegmentedControl'
+import { RANGE_OPTIONS } from '../constants'
 
 export interface DashboardHistoryCardProps {
   range: HistoryRange
@@ -11,14 +12,6 @@ export interface DashboardHistoryCardProps {
   isLoading: boolean
   filterLabel: string
 }
-
-const RANGE_OPTIONS = [
-  { value: '1M', label: '1M' },
-  { value: '3M', label: '3M' },
-  { value: '6M', label: '6M' },
-  { value: '1Y', label: '1Y' },
-  { value: 'ALL', label: 'ALL' },
-]
 
 export const DashboardHistoryCard: FC<DashboardHistoryCardProps> = ({
   range,
@@ -44,15 +37,15 @@ export const DashboardHistoryCard: FC<DashboardHistoryCardProps> = ({
         />
       }
     >
-      <p className="mb-3 text-xs uppercase tracking-[0.2em] text-slate-400">
+      <p className="mb-3 text-xs uppercase tracking-[0.2em] text-[rgb(var(--fg))]/50">
         {filterLabel}
       </p>
       {isLoading ? (
         <div className="h-56">
-          <div className="h-full w-full rounded-xl border border-dashed border-[rgb(var(--border))] bg-slate-50" />
+          <div className="h-full w-full rounded-xl border border-dashed border-[rgb(var(--border))] bg-[rgba(var(--fg),0.04)]" />
         </div>
       ) : points.length === 0 ? (
-        <div className="flex h-56 items-center justify-center rounded-xl border border-dashed border-[rgb(var(--border))] text-sm text-slate-500">
+        <div className="flex h-56 items-center justify-center rounded-xl border border-dashed border-[rgb(var(--border))] text-sm text-[rgb(var(--fg))]/60">
           No history available.
         </div>
       ) : (

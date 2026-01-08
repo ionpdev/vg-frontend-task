@@ -6,7 +6,7 @@ export interface StatusMessageProps {
 }
 
 const toneClasses: Record<NonNullable<StatusMessageProps['tone']>, string> = {
-  info: 'text-slate-500',
+  info: 'text-[rgb(var(--fg))]/60',
   error: 'text-red-500',
 }
 

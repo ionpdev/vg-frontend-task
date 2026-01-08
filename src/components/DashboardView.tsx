@@ -1,5 +1,9 @@
 import type { FC } from "react"
-import type { AllocationRow, HistoryPoint, HistoryRange } from "../domain/models"
+import type {
+  AllocationRow,
+  HistoryPoint,
+  HistoryRange,
+} from "../domain/models"
 import type {
   AssetClassTableRow,
   AssetTableRow,
@@ -84,25 +88,25 @@ export const DashboardView: FC<DashboardViewProps> = ({
       {hasError ? <StatusMessage message={errorMessage} tone="error" /> : null}
       {!isLoading && !hasError ? (
         <div className="space-y-6">
-          <div className="grid gap-4 sm:grid-cols-3">
-            <div className="rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card))] px-4 py-3 text-sm text-slate-500">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card))] px-4 py-3 text-sm text-[rgb(var(--fg))]/60 transition hover:shadow-sm">
+              <p className="text-xs uppercase tracking-[0.2em] text-[rgb(var(--fg))]/50">
                 Assets
               </p>
               <p className="text-lg font-semibold text-[rgb(var(--fg))]">
                 {assetsCount}
               </p>
             </div>
-            <div className="rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card))] px-4 py-3 text-sm text-slate-500">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
+            <div className="rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card))] px-4 py-3 text-sm text-[rgb(var(--fg))]/60 transition hover:shadow-sm">
+              <p className="text-xs uppercase tracking-[0.2em] text-[rgb(var(--fg))]/50">
                 Positions
               </p>
               <p className="text-lg font-semibold text-[rgb(var(--fg))]">
                 {positionsCount}
               </p>
             </div>
-            <div className="rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card))] px-4 py-3 text-sm text-slate-500">
-              <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
+            <div className="rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card))] px-4 py-3 text-sm text-[rgb(var(--fg))]/60 transition hover:shadow-sm">
+              <p className="text-xs uppercase tracking-[0.2em] text-[rgb(var(--fg))]/50">
                 Prices
               </p>
               <p className="text-lg font-semibold text-[rgb(var(--fg))]">
@@ -111,7 +115,7 @@ export const DashboardView: FC<DashboardViewProps> = ({
               {isPricesLoading ? <Skeleton className="mt-2 h-3 w-24" /> : null}
             </div>
           </div>
-          <div className="grid gap-6 lg:grid-cols-[1.1fr_1.6fr]">
+          <div className="grid items-start gap-6 lg:grid-cols-[1.1fr_1.6fr]">
             <DashboardDonutCard
               allocations={allocations}
               mode={mode}

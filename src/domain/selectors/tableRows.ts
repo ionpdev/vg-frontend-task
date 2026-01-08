@@ -1,5 +1,5 @@
-import type { AllocationRow, EnrichedPosition } from '../models'
-import { allocationsByAsset, allocationsByAssetClass } from './allocations'
+import type { AllocationRow, EnrichedPosition } from "../models"
+import { allocationsByAsset, allocationsByAssetClass } from "./allocations"
 
 export interface AssetTableRow {
   key: string
@@ -17,11 +17,15 @@ export interface AssetClassTableRow {
   percent: number
 }
 
+// Sums row values to compute table percentages.
 const sumValues = (rows: { value: number }[]) => {
   return rows.reduce((total, row) => total + row.value, 0)
 }
 
-export const buildAssetRows = (positions: EnrichedPosition[]): AssetTableRow[] => {
+// Aggregates positions per asset, computing totals and average price.
+export const buildAssetRows = (
+  positions: EnrichedPosition[]
+): AssetTableRow[] => {
   const grouped = new Map<string, AssetTableRow>()
 
   positions.forEach((position) => {
@@ -59,8 +63,9 @@ export const buildAssetRows = (positions: EnrichedPosition[]): AssetTableRow[] =
   }))
 }
 
+// Builds table rows from asset-class allocations.
 export const buildAssetClassRows = (
-  positions: EnrichedPosition[],
+  positions: EnrichedPosition[]
 ): AssetClassTableRow[] => {
   const allocations = allocationsByAssetClass(positions)
 
@@ -72,11 +77,12 @@ export const buildAssetClassRows = (
   }))
 }
 
+// Switches between asset/class allocations for chart input.
 export const buildAllocationRows = (
   positions: EnrichedPosition[],
-  mode: 'asset' | 'assetClass',
+  mode: "asset" | "assetClass"
 ): AllocationRow[] => {
-  return mode === 'asset'
+  return mode === "asset"
     ? allocationsByAsset(positions)
     : allocationsByAssetClass(positions)
 }

@@ -1,4 +1,4 @@
-import type { HistoryPoint, PriceModel } from '../models'
+import type { HistoryPoint, PriceModel } from "../models"
 
 export type HistoryFillMode = "none" | "carry"
 
@@ -8,6 +8,7 @@ export interface HistorySeriesParams {
   fillMode?: HistoryFillMode
 }
 
+// Builds portfolio history series from daily prices and holdings.
 export const historySeries = ({
   prices,
   quantitiesByAsset,
@@ -30,7 +31,9 @@ export const historySeries = ({
 
   return dates.map((date) => {
     const dayPrices = grouped.get(date) ?? []
-    const priceByAsset = new Map(dayPrices.map((price) => [price.asset, price.price]))
+    const priceByAsset = new Map(
+      dayPrices.map((price) => [price.asset, price.price])
+    )
 
     const value = assets.reduce((total, asset) => {
       const quantity = quantitiesByAsset[asset] ?? 0

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'bun:test'
+import { describe, expect, it } from 'vitest'
 import { getRangeDates } from '../dateRange'
 
 const toDate = (value: string) => new Date(value + 'T00:00:00Z')

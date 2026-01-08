@@ -1,3 +1,4 @@
+// Formats numeric values for UI money displays (dashboards, tooltips).
 export const formatUsd = (value: number): string => {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',

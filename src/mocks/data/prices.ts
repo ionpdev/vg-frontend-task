@@ -6,11 +6,13 @@ export interface PriceFixture {
 }
 
 export const prices: PriceFixture[] = [
-  { id: 'price-btc', asset: 'BTC', price: 30250.12, asOf: '2023-01-01' },
-  { id: 'price-eth', asset: 'ETH', price: 2150.34, asOf: '2023-01-01' },
-  { id: 'price-aapl', asset: 'AAPL', price: 178.45, asOf: '2023-01-01' },
-  { id: 'price-msft', asset: 'MSFT', price: 247.18, asOf: '2023-01-01' },
-  { id: 'price-usd', asset: 'USD', price: 1, asOf: '2023-01-01' },
+  { id: 'price-btc', asset: 'BTC', price: 30250.12, asOf: '2025-02-14' },
+  { id: 'price-eth', asset: 'ETH', price: 2150.34, asOf: '2024-11-03' },
+  { id: 'price-aapl', asset: 'AAPL', price: 178.45, asOf: '2023-07-12' },
+  { id: 'price-msft', asset: 'MSFT', price: 247.18, asOf: '2024-03-08' },
+  { id: 'price-amzn', asset: 'AMZN', price: 132.65, asOf: '2022-06-30' },
+  { id: 'price-usd', asset: 'USD', price: 1, asOf: '2025-01-06' },
+  { id: 'price-eur', asset: 'EUR', price: 1.09, asOf: '2021-09-22' },
 ]
 
 export interface PriceSeriesParams {

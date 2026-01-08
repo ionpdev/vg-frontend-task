@@ -6,13 +6,13 @@ import { Layout } from '../components/Layout'
 import { AuthProvider } from '../libs/auth/AuthProvider'
 
 const RootLayout: FC = () => {
-  const isDev = import.meta.env.DEV
+  const showDevtools = import.meta.env.DEV && !import.meta.env.VITEST
 
   return (
     <AuthProvider>
       <Layout>
         <Outlet />
-        {isDev ? (
+        {showDevtools ? (
           <TanStackDevtools
             config={{ position: 'bottom-right' }}
             plugins={[

@@ -1,9 +1,11 @@
 import type { AllocationRow, EnrichedPosition } from '../models'
 
+// Sums allocation values to derive the portfolio total.
 const sumValues = (rows: { value: number }[]) => {
   return rows.reduce((total, row) => total + row.value, 0)
 }
 
+// Converts a value into a portfolio percentage with zero-safe handling.
 const toPercent = (value: number, total: number) => {
   if (total === 0) {
     return 0
@@ -12,6 +14,7 @@ const toPercent = (value: number, total: number) => {
   return (value / total) * 100
 }
 
+// Groups positions by asset to power the donut/table views.
 export const allocationsByAsset = (positions: EnrichedPosition[]): AllocationRow[] => {
   const grouped = new Map<string, { label: string; value: number }>()
 
@@ -40,6 +43,7 @@ export const allocationsByAsset = (positions: EnrichedPosition[]): AllocationRow
   }))
 }
 
+// Groups positions by asset class for the class-mode breakdown.
 export const allocationsByAssetClass = (positions: EnrichedPosition[]): AllocationRow[] => {
   const grouped = new Map<string, { label: string; value: number }>()
 

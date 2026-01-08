@@ -4,8 +4,10 @@ import { Link } from '@tanstack/react-router'
 export type HeaderActionVariant = 'primary' | 'secondary'
 
 const variantClasses: Record<HeaderActionVariant, string> = {
-  primary: 'bg-[rgb(var(--primary))] text-white',
-  secondary: 'border border-[rgb(var(--border))] text-[rgb(var(--fg))]',
+  primary:
+    'bg-[rgb(var(--primary))] text-white hover:brightness-95 active:brightness-90',
+  secondary:
+    'border border-[rgb(var(--border))] text-[rgb(var(--fg))] hover:bg-[rgba(var(--fg),0.04)]',
 }
 
 export interface HeaderActionLinkProps {
@@ -21,7 +23,7 @@ export const HeaderActionLink: FC<HeaderActionLinkProps> = ({
 }) => {
   return (
     <Link
-      className={`rounded-md px-4 py-2 text-sm font-semibold ${variantClasses[variant]}`}
+      className={`cursor-pointer rounded-md px-4 py-2 text-sm font-semibold transition ${variantClasses[variant]}`}
       to={to}
     >
       {children}
@@ -42,7 +44,7 @@ export const HeaderActionButton: FC<HeaderActionButtonProps> = ({
 }) => {
   return (
     <button
-      className={`rounded-md px-4 py-2 text-sm font-semibold ${variantClasses[variant]}`}
+      className={`cursor-pointer rounded-md px-4 py-2 text-sm font-semibold transition ${variantClasses[variant]}`}
       onClick={onClick}
       type="button"
     >

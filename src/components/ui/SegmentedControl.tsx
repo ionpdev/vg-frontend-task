@@ -34,10 +34,10 @@ export const SegmentedControl: FC<SegmentedControlProps> = ({
         return (
           <button
             key={option.value}
-            className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+            className={`cursor-pointer rounded-full px-3 py-1 text-xs font-semibold transition ${
               isActive
                 ? 'bg-[rgb(var(--primary))] text-white'
-                : 'text-slate-500'
+                : 'text-[rgb(var(--fg))]/60'
             }`}
             data-value={option.value}
             onClick={handleClick}

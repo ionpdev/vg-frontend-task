@@ -1,6 +1,14 @@
-import type { FC } from 'react'
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
-import type { AllocationRow } from '../../domain/models'
+import type { FC } from "react"
+import {
+  Cell,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip as RechartsTooltip,
+} from "recharts"
+import type { AllocationRow } from "../../domain/models"
+import { Tooltip } from "./Tooltip"
+import { DONUT_COLORS } from "../../constants"
 
 export interface DonutChartProps {
   data: AllocationRow[]
@@ -8,48 +16,37 @@ export interface DonutChartProps {
   onSelect: (key: string) => void
 }
 
-const COLORS = [
-  '#2563eb',
-  '#0ea5e9',
-  '#14b8a6',
-  '#f59e0b',
-  '#ef4444',
-  '#8b5cf6',
-]
-
-const getActiveIndex = (data: AllocationRow[], selectedKey?: string) => {
-  if (!selectedKey) {
-    return -1
-  }
-
-  return data.findIndex((row) => row.key === selectedKey)
-}
-
-const DonutTooltip: FC<{ active?: boolean; payload?: Array<{ payload?: AllocationRow }> }> = ({
-  active,
-  payload,
+export const DonutChart: FC<DonutChartProps> = ({
+  data,
+  selectedKey,
+  onSelect,
 }) => {
-  if (!active || !payload || payload.length === 0) {
-    return null
+  const renderTooltip = ({
+    active,
+    payload,
+  }: {
+    active?: boolean
+    payload?: ReadonlyArray<{ payload?: AllocationRow }>
+  }) => {
+    if (!active || !payload || payload.length === 0) {
+      return null
+    }
+
+    const row = payload[0]?.payload
+
+    if (!row) {
+      return null
+    }
+
+    return <Tooltip title={row.label} value={`${row.percent.toFixed(1)}%`} />
   }
 
-  const row = payload[0]?.payload
+  const chartData: Array<Record<string, unknown>> = data.map((row) => ({
+    ...row,
+  }))
 
-  if (!row) {
-    return null
-  }
-
-  return (
-    <div className="rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--card))] px-3 py-2 text-xs shadow-sm">
-      <p className="font-semibold text-slate-700">{row.label}</p>
-      <p className="text-slate-500">{row.percent.toFixed(1)}%</p>
-    </div>
-  )
-}
-
-export const DonutChart: FC<DonutChartProps> = ({ data, selectedKey, onSelect }) => {
   const handleSliceClick = (payload: unknown) => {
-    if (!payload || typeof payload !== 'object') {
+    if (!payload || typeof payload !== "object") {
       return
     }
 
@@ -60,31 +57,27 @@ export const DonutChart: FC<DonutChartProps> = ({ data, selectedKey, onSelect })
     }
   }
 
-  const activeIndex = getActiveIndex(data, selectedKey)
-
   return (
     <div className="h-48">
       <ResponsiveContainer>
         <PieChart>
           <Pie
-            data={data}
+            data={chartData}
             dataKey="value"
             nameKey="label"
             innerRadius={55}
             outerRadius={80}
-            activeIndex={activeIndex}
-            activeOuterRadius={88}
             onClick={handleSliceClick}
           >
             {data.map((row, index) => (
               <Cell
                 key={row.key}
-                fill={COLORS[index % COLORS.length]}
+                fill={DONUT_COLORS[index % DONUT_COLORS.length]}
                 opacity={selectedKey && row.key !== selectedKey ? 0.5 : 1}
               />
             ))}
           </Pie>
-          <Tooltip content={<DonutTooltip />} />
+          <RechartsTooltip content={renderTooltip} />
         </PieChart>
       </ResponsiveContainer>
     </div>

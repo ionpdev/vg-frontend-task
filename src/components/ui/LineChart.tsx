@@ -4,39 +4,25 @@ import {
   Line,
   LineChart as RechartsLineChart,
   ResponsiveContainer,
-  Tooltip,
+  Tooltip as RechartsTooltip,
   XAxis,
   YAxis,
 } from 'recharts'
 import type { HistoryPoint } from '../../domain/models'
 import { formatUsd } from '../../domain/money'
+import { formatChartDate } from '../../utils'
+import { Tooltip } from './Tooltip'
 
 export interface LineChartProps {
   data: HistoryPoint[]
 }
 
-const formatDate = (value: string) => {
-  const [year, month, day] = value.split('-').map(Number)
-
-  if (!year || !month || !day) {
-    return value
-  }
-
-  const date = new Date(Date.UTC(year, month - 1, day))
-
-  return date.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-  })
-}
-
-const formatValue = (value: number) => {
-  return formatUsd(value)
-}
-
-const LineTooltip: FC<{ active?: boolean; payload?: Array<{ payload?: HistoryPoint }> }> = ({
+const renderLineTooltip = ({
   active,
   payload,
+}: {
+  active?: boolean
+  payload?: ReadonlyArray<{ payload?: HistoryPoint }>
 }) => {
   if (!active || !payload || payload.length === 0) {
     return null
@@ -48,15 +34,11 @@ const LineTooltip: FC<{ active?: boolean; payload?: Array<{ payload?: HistoryPoi
     return null
   }
 
-  return (
-    <div className="rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--card))] px-3 py-2 text-xs shadow-sm">
-      <p className="font-semibold text-slate-700">{point.date}</p>
-      <p className="text-slate-500">{formatUsd(point.value)}</p>
-    </div>
-  )
+  return <Tooltip title={point.date} value={formatUsd(point.value)} />
 }
 
 export const LineChart: FC<LineChartProps> = ({ data }) => {
+
   return (
     <div className="h-60">
       <ResponsiveContainer>
@@ -64,7 +46,7 @@ export const LineChart: FC<LineChartProps> = ({ data }) => {
           <CartesianGrid stroke="#e2e8f0" strokeDasharray="4 6" />
           <XAxis
             dataKey="date"
-            tickFormatter={formatDate}
+            tickFormatter={formatChartDate}
             stroke="#94a3b8"
             tickLine={false}
             axisLine={false}
@@ -73,13 +55,13 @@ export const LineChart: FC<LineChartProps> = ({ data }) => {
             tickMargin={8}
           />
           <YAxis
-            tickFormatter={formatValue}
+            tickFormatter={formatUsd}
             stroke="#94a3b8"
             width={86}
             tickLine={false}
             axisLine={false}
           />
-          <Tooltip content={<LineTooltip />} />
+          <RechartsTooltip content={renderLineTooltip} />
           <Line
             type="monotone"
             dataKey="value"

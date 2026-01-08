@@ -19,3 +19,5 @@ export type { SegmentedControlProps, SegmentedOption } from './SegmentedControl'
 
 export { StatusMessage } from './StatusMessage'
 export type { StatusMessageProps } from './StatusMessage'
+export { Tooltip } from './Tooltip'
+export type { TooltipProps } from './Tooltip'

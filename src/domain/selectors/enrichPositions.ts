@@ -6,14 +6,17 @@ export interface EnrichPositionsParams {
   prices: PriceModel[]
 }
 
+// Fast lookup from asset symbol/id to last known price.
 const buildPriceMap = (prices: PriceModel[]) => {
   return new Map(prices.map((price) => [price.asset, price.price]))
 }
 
+// Fast lookup from asset id to metadata.
 const buildAssetMap = (assets: AssetModel[]) => {
   return new Map(assets.map((asset) => [asset.id, asset]))
 }
 
+// Joins raw positions with asset metadata + pricing for dashboard calculations.
 export const enrichPositions = ({
   positions,
   assets,
