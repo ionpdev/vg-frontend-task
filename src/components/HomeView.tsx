@@ -1,5 +1,5 @@
 import type { FC } from "react"
-import { PageHeader, HeaderActionButton, HeaderActionLink } from "../ui"
+import { PageHeader, HeaderActionButton, HeaderActionLink } from "./ui"
 
 export interface HomeViewProps {
   isAuthenticated: boolean

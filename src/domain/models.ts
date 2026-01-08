@@ -46,3 +46,5 @@ export interface HistoryPoint {
   date: string
   value: number
 }
+
+export type HistoryRange = "1M" | "3M" | "6M" | "1Y" | "ALL"
