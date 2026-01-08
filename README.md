@@ -6,6 +6,14 @@ Frontend dashboard task built with React, TypeScript, TanStack Router, and Tailw
 
 See `ARCHITECTURE.md` for an overview of the tech stack, structure, and data flow.
 
+## Install
+
+```bash
+bun --version || curl -fsSL https://bun.sh/install | bash
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+```
+
 ## Run
 
 ```bash
