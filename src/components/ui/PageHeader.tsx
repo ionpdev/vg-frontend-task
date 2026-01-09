@@ -1,10 +1,13 @@
 import type { FC, ReactNode } from 'react'
+import { HeaderActionButton, HeaderActionLink } from './HeaderActions'
 
 export interface PageHeaderProps {
   title: string
   subtitle?: string
   badge?: string
   actions?: ReactNode
+  isAuthenticated?: boolean
+  onLogout?: () => void
 }
 
 export const PageHeader: FC<PageHeaderProps> = ({
@@ -12,7 +15,28 @@ export const PageHeader: FC<PageHeaderProps> = ({
   subtitle,
   badge,
   actions,
+  isAuthenticated,
+  onLogout,
 }) => {
+  const resolvedActions =
+    actions ??
+    (typeof isAuthenticated === 'boolean' ? (
+      isAuthenticated ? (
+        <>
+          <HeaderActionLink to="/dashboard" variant="primary">
+            View Dashboard
+          </HeaderActionLink>
+          {onLogout ? (
+            <HeaderActionButton onClick={onLogout}>Logout</HeaderActionButton>
+          ) : null}
+        </>
+      ) : (
+        <HeaderActionLink to="/login" variant="primary">
+          Login
+        </HeaderActionLink>
+      )
+    ) : null)
+
   return (
     <div className="flex flex-wrap items-start justify-between gap-4">
       <div className="space-y-2">
@@ -26,7 +50,9 @@ export const PageHeader: FC<PageHeaderProps> = ({
           <p className="text-sm text-[rgb(var(--fg))]/70">{subtitle}</p>
         ) : null}
       </div>
-      {actions ? <div className="flex items-center gap-3">{actions}</div> : null}
+      {resolvedActions ? (
+        <div className="flex items-center gap-3">{resolvedActions}</div>
+      ) : null}
     </div>
   )
 }

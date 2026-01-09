@@ -1,5 +1,5 @@
 import type { FC } from "react"
-import { PageHeader, HeaderActionButton, HeaderActionLink } from "./ui"
+import { PageHeader, PillList, SummaryCards } from "./ui"
 
 export interface HomeViewProps {
   isAuthenticated: boolean
@@ -16,56 +16,18 @@ export const HomeView: FC<HomeViewProps> = ({ isAuthenticated, onLogout }) => {
           badge="Vega Portfolio"
           title="Portfolio Overview"
           subtitle="Track allocations, positions, and historical performance in a clean, responsive dashboard."
-          actions={
-            isAuthenticated ? (
-              <>
-                <HeaderActionLink to="/dashboard" variant="primary">
-                  View Dashboard
-                </HeaderActionLink>
-                <HeaderActionButton onClick={onLogout}>
-                  Logout
-                </HeaderActionButton>
-              </>
-            ) : (
-              <HeaderActionLink to="/login" variant="primary">
-                Login
-              </HeaderActionLink>
-            )
-          }
+          isAuthenticated={isAuthenticated}
+          onLogout={onLogout}
         />
-        <div className="mt-5 flex flex-wrap gap-2">
-          {[
+        <PillList
+          labels={[
             "Live market pulse",
             "Allocation insights",
             "Historical context",
-          ].map((label) => (
-            <span
-              key={label}
-              className="rounded-full border border-[rgb(var(--border))] bg-[rgba(var(--fg),0.03)] px-3 py-1 text-xs font-semibold text-[rgb(var(--fg))]/70"
-            >
-              {label}
-            </span>
-          ))}
-        </div>
+          ]}
+        />
       </header>
-
-      <section className="grid gap-5 md:grid-cols-3">
-        {[
-          "Donut breakdown by asset and asset class.",
-          "Positions table aligned with the selected slice.",
-          "Historical chart with time-range controls.",
-        ].map((text) => (
-          <div
-            key={text}
-            className="rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card))] px-5 py-5 text-sm text-[rgb(var(--fg))]/70 transition hover:shadow-sm"
-          >
-            <div className="flex items-start gap-3">
-              <span className="mt-1 h-2 w-2 rounded-full bg-[rgb(var(--primary))]" />
-              <p>{text}</p>
-            </div>
-          </div>
-        ))}
-      </section>
+      <SummaryCards />
     </div>
   )
 }
