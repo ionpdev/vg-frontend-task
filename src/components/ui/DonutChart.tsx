@@ -58,7 +58,7 @@ export const DonutChart: FC<DonutChartProps> = ({
   }
 
   return (
-    <div className="h-48">
+    <div className="donut-chart h-48">
       <ResponsiveContainer>
         <PieChart>
           <Pie

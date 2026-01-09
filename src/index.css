@@ -27,3 +27,8 @@ body {
   background: rgb(var(--bg));
   color: rgb(var(--fg));
 }
+
+.donut-chart :focus,
+.donut-chart :focus-visible {
+  outline: none;
+}
